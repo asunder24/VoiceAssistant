@@ -4,7 +4,7 @@ class Assistant:
 
     def __init__(self, key):
         openai.api_key = key
-        self.history = [{"role": "system", "content": "You are a personal assistant. Use only English. Provide helpful responses."}]
+        self.history = [{"role": "system", "content": "You are a personal assistant. Use only English. Provide helpful responses. Be as concise as possible."}]
 
 
     #def activate(self):
