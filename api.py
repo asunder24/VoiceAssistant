@@ -1,1 +1,1 @@
-openapi="Enter personal API key here"
+OPENAPI="Enter personal API key here"

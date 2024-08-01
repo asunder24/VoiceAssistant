@@ -1,4 +1,6 @@
 import os
+import openai
+from api import OPENAPI
 
 def main():
     #Initialize gpt
