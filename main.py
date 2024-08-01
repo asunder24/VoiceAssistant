@@ -14,7 +14,7 @@ def main():
     #Check query to determine if system process or search
     #Feed text to model
     #Receive response, output as speech and text
-    #
+    
 
 
 if __name__ == "__main__":
