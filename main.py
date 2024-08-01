@@ -8,6 +8,7 @@ from Assistant import Assistant
 def main():
     #Initialize gpt
     assistant = Assistant(OPENAPI)
+    
     #Initialize system
     #Take in user input through voice
     #Process to text
