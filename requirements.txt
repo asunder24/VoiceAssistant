@@ -1,3 +1,6 @@
 pathlib
 openai
 pyttsx3
+SpeechRecognition
+pyaudio
+scipy
