@@ -5,10 +5,25 @@ from api import OPENAPI
 from Assistant import Assistant
 
 
+def terminate(query):
+    termination_keywords = ["exit","shut down", "stop listening", "bye", "thats all", "goodbye", "shutdown"] # Add more if necessary
+    return any(keyword in query for keyword in termination_keywords)
+
 def main():
     #Initialize gpt
     assistant = Assistant(OPENAPI)
-    
+    while True:
+        query = assistant.listen().lower()
+        if query:
+            if terminate(query):
+                print("Have a nice day!")
+                print("Shutting down...")
+                break
+                
+            #Branch cases below
+            
+
+
     #Initialize system
     #Take in user input through voice
     #Process to text
