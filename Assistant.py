@@ -1,16 +1,17 @@
 import openai
 import speech_recognition as sr 
+import pyttsx3
+import os
 
 class Assistant:
 
     def __init__(self, key):
         #self.client = OpenAI(api_key=key)
         #openai.api_key = key
-        self.voice = False
+        self.voice = True
+        self.engine = pyttsx3.init() 
+        self.engine.setProperty('voice', 0)
         self.history = [{"role": "system", "content": "You are a personal assistant. Use only English. Provide helpful responses. Be as concise as possible."}]
-
-
-    #def activate(self):
 
     def listen(self):
         recognizer = sr.Recognizer()
@@ -27,12 +28,12 @@ class Assistant:
             self.speak("Error! Please try again later.")
             return ""
 
-    def process_query(self, query){
+    def process_query(self, query):
         #feed query into gpt model
         #provide list of tool functions so model can call if necessary
         #use error checking the ensure no hallucination
         return None
-    }
+    
     
     def toggle_voice(self):
         self.voice = not self.voice
@@ -42,9 +43,11 @@ class Assistant:
         self.speak("Deactivating text to speech...")
 
     def speak(self, response):
-        if self.voice == False:
-            print(response)
-            return None
-        #else text to speech with model response
+        print(response)
+        if self.voice == True:
+            self.engine.say(response)
+            self.engine.runAndWait()
+        return None
+    
     
 

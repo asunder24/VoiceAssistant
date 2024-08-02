@@ -1,5 +1,4 @@
 import os
-import pyttsx3
 
 from api import OPENAPI
 from Assistant import Assistant
@@ -21,16 +20,18 @@ def main():
                 break
             assistant.process_query(query)
 
+            #Automatically store memory on system for next startup, clear if requested
             #Branch cases below
                 #Turn voice off/on
                 #File/Applications
                 #Math
-                #Time/Timer/Stopwatch
+                #Time/Timer/Stopwatch/Alarm
                 #Calendar?
                 #Generic text generation
                 #API Calls
                     #Weather
                     #Music
+                    #News?
 
 
 
