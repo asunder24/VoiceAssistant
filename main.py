@@ -16,12 +16,22 @@ def main():
         query = assistant.listen().lower()
         if query:
             if terminate(query):
-                print("Have a nice day!")
-                print("Shutting down...")
+                assistant.speak("Have a nice day!")
+                assistant.speak("Shutting down...")
                 break
-                
+            assistant.process_query(query)
+
             #Branch cases below
-            
+                #Turn voice off/on
+                #File/Applications
+                #Math
+                #Time/Timer/Stopwatch
+                #Calendar?
+                #Generic text generation
+                #API Calls
+                    #Weather
+                    #Music
+
 
 
     #Initialize system
