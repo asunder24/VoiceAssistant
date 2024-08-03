@@ -22,7 +22,6 @@ def main():
 
             #Automatically store memory on system for next startup, clear if requested
             #Branch cases below
-                #Turn voice off/on
                 #File/Applications
                 #Math
                 #Time/Timer/Stopwatch/Alarm
@@ -32,6 +31,7 @@ def main():
                     #Weather
                     #Music
                     #News?
+                    #Wolfram Alpha spoken searches
 
 
 
