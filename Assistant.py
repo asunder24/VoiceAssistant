@@ -6,6 +6,8 @@ import time
 import json
 import requests
 import signal
+from scandir import scandir
+import ctypes
 from api import WEATHER
 
 class Assistant:
@@ -18,7 +20,8 @@ class Assistant:
         self.time = None
         self.engine = pyttsx3.init() 
         self.engine.setProperty('voice', 0)
-        self.get_current_weather("San Francisco")
+        print(self.find_files('C:\\',['requirements.txt']))
+        #self.get_current_weather("San Francisco")
         self.history = [{"role": "system", "content": "You are a personal assistant. Use only English. Provide helpful responses. Be as concise as possible."}]
         self.tools = [
             {
@@ -36,6 +39,13 @@ class Assistant:
                         },
                         "required": ["location"]
                     }
+                }
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name":  "toggle_voice",
+                    "description": "Toggle text-to-speech off or on"
                 }
             }
         ]
@@ -69,6 +79,7 @@ class Assistant:
         response = requests.get(base_url, params=parameters)
         if response.status_code == 200:
             return response.json()
+        
         return None
 
     def get_weather_prediction(self):
@@ -109,6 +120,38 @@ class Assistant:
     def store_mem(self):
         return None
     
+    
+
+    def is_sym_link(self, path):
+        # http://stackoverflow.com/a/35915819
+        FILE_ATTRIBUTE_REPARSE_POINT = 0x0400
+        return os.path.isdir(path) and (ctypes.windll.kernel32.GetFileAttributesW(path) & FILE_ATTRIBUTE_REPARSE_POINT)
+
+    def find_files(self, base, filenames):
+        hits = []
+        def find_in_dir_subdir(direc):
+            content = scandir(direc)
+            try:
+                for entry in content:
+                    if entry.name in filenames:
+                        hits.append(os.path.join(direc, entry.name))
+
+                    elif entry.is_dir() and not self.is_sym_link(os.path.join(direc, entry.name)):
+                        try:
+                            find_in_dir_subdir(os.path.join(direc, entry.name))
+                        except UnicodeDecodeError:
+                            print("Could not resolve " + os.path.join(direc, entry.name))
+                            continue
+            except OSError as e:
+                pass
+        if not os.path.exists(base):
+            return
+        else:
+            find_in_dir_subdir(base)
+        return hits
+
+
+
 
     #host of file processing functions needed still
     #host of weather calls needed still
