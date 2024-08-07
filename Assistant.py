@@ -74,6 +74,7 @@ class Assistant:
     def get_current_weather(self, location=None):
         if location == None:
             return None
+        location = location.replace(",","")
         base_url = "http://api.weatherapi.com/v1/current.json"
         parameters={"key": self.weather_api, "q": location}
         response = requests.get(base_url, params=parameters)
@@ -82,8 +83,16 @@ class Assistant:
         
         return None
 
-    def get_weather_prediction(self):
+    def get_weather_prediction(self, location=None, days=1):
         #predict location and time
+        if location == None:
+            return None
+        location = location.replace(",","")
+        base_url = "http://api.weatherapi.com/v1/forecast.json"
+        parameters={"key": self.weather_api, "q": location, "days": days}
+        response = requests.get(base_url, params=parameters)
+        if response.status_code == 200:
+            return response.json()
         return None
 
     def get_time(self):
@@ -109,6 +118,11 @@ class Assistant:
 
     def clear_mem(self):
         #Clear stored memory, including all written files
+        self.history = [{"role": "system", "content": "You are a personal assistant. Use only English. Provide helpful responses. Be as concise as possible."}]
+        try:
+            os.remove('mem.json')
+        except:
+            pass
         return None
     
 
@@ -118,6 +132,8 @@ class Assistant:
         return None
 
     def store_mem(self):
+        with open('mem.json', 'w') as f:
+            json.dump(self.history, f)
         return None
     
     
@@ -149,6 +165,10 @@ class Assistant:
         else:
             find_in_dir_subdir(base)
         return hits
+
+        #How to decide which file to open?? Can filter based on directories, but which ones?
+        #Potentially limit only to main directories?
+
 
 
 
